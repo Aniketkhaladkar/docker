@@ -9,7 +9,7 @@ RUN tar -xzf /opt/apache-tomcat-8.5.99.tar.gz -C /opt/
 # USER root
 
 WORKDIR /opt/apache-tomcat-8.5.99
-RUN chmod +x bin/*.sh
+#RUN chmod +x bin/*.sh
 COPY mysql-connector.jar lib/mysql-connector.jar
 
 COPY context.xml conf/context.xml
