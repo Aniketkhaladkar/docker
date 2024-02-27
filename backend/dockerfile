@@ -1,26 +1,27 @@
-# Base image
-FROM debian:latest
 
-# Metadata
+FROM amazonlinux:latest
+
+
 LABEL Author="aniket khaladkar"
 
-# Install OpenJDK 11 JRE headless
-RUN apt update && apt install -y openjdk-11-jre-headless
 
-# Download and extract Apache Tomcat
+RUN yum install java tar gzip -y
+WORKDIR /opt
+
+
 ADD https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz /opt
 RUN tar -xzf /opt/apache-tomcat-8.5.99.tar.gz -C /opt/
 
-# Set working directory
+
 WORKDIR /opt/apache-tomcat-8.5.99
 
-# Copy MySQL connector JAR to Tomcat's lib directory
+
 COPY mysql-connector.jar lib/mysql-connector.jar
 
-# Copy context.xml configuration file
+
 COPY context.xml conf/context.xml
 
-# Copy the student.war file to Tomcat's webapps directory
+
 COPY student.war webapps/student.war
 
 # Expose port 8080
