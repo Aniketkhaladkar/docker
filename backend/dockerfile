@@ -1,21 +1,30 @@
-FROM debain:latest
+# Base image
+FROM debian:latest
+
+# Metadata
 LABEL Author="aniket khaladkar"
 
-RUN apt install openjdk-11-jre-headless -y
+# Install OpenJDK 11 JRE headless
+RUN apt update && apt install -y openjdk-11-jre-headless
 
+# Download and extract Apache Tomcat
 ADD https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.99/bin/apache-tomcat-8.5.99.tar.gz /opt
 RUN tar -xzf /opt/apache-tomcat-8.5.99.tar.gz -C /opt/
 
-# USER root
-
+# Set working directory
 WORKDIR /opt/apache-tomcat-8.5.99
-# RUN chmod +x bin/*.sh
+
+# Copy MySQL connector JAR to Tomcat's lib directory
 COPY mysql-connector.jar lib/mysql-connector.jar
 
+# Copy context.xml configuration file
 COPY context.xml conf/context.xml
+
+# Copy the student.war file to Tomcat's webapps directory
 COPY student.war webapps/student.war
 
+# Expose port 8080
 EXPOSE 8080
 
-
+# Start Tomcat
 CMD ["bin/catalina.sh", "run"]
