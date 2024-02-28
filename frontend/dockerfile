@@ -1,6 +1,7 @@
 # INSTRUCTION ARG
 
-FROM centos:7
+FROM amazonlinux:latest
+
 
 LABEL developer="aniket"
 
